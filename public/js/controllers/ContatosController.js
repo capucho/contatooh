@@ -1,29 +1,40 @@
 angular.module( 'contatooh' ).controller( 'ContatosController', ContatosController );
 
 
-function ContatosController( $scope ) {
+function ContatosController( $scope, $resource ) {
 
-  $scope.total = 0;
+
+  $scope.contatos = [];
   $scope.filtro = '';
 
+  $scope.init = function init() {
+    getContatos();
+  }
 
 
-  $scope.incrementa = function () {
-    $scope.total++;
+  $scope.init();
+
+  /**
+   * Functions
+   */
+
+
+  function getContatos() {
+
+    var Contato = $resource( '/contatos' );
+
+    Contato.query( _success, _error );
+
+    function _success( contatos ) {
+      $scope.contatos = contatos;
+
+    }
+
+    function _error( error ) {
+      console.log( 'Nao foi possivel obter a lista de contatos' );
+    }
+
   };
 
-  $scope.contatos = [ {
-    "_id": 1,
-    "nome": "Contato Angular 1",
-    "email": "cont1@empresa.com.br"
-  }, {
-    "_id": 2,
-    "nome": "Contato Angular 2",
-    "email": "cont2@empresa.com.br"
-  }, {
-    "_id": 3,
-    "nome": "Contato Angular 3",
-    "email": "cont3@empresa.com.br"
-  } ];
 
 }

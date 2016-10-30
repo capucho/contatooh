@@ -1,7 +1,7 @@
 //primeiro parametro eh o nome do modulo
 //o segundo eh um array com todas as suas dependencias
 
-angular.module( 'contatooh', [ 'ngRoute' ] )
+angular.module( 'contatooh', [ 'ngRoute', 'ngResource' ] )
   .config( _config );
 
 
