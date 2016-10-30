@@ -29,6 +29,10 @@ module.exports = function () {
     contato ? res.json( contato ) : res.status( 404 ).send( 'Contato nao encontrado' );
   };
 
+  controller.salvaContato = function ( req, res ) {
+    console.log( req )
+  }
+
   controller.removeContato = function ( req, res ) {
     console.log( 'API : removeContato' );
 
@@ -38,7 +42,7 @@ module.exports = function () {
       return contato._id != _idContato;
     } );
 
-    res.send( 204 ).end();
+    res.status( 204 ).end();
   }
 
   return controller;
