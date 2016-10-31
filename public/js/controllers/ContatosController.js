@@ -1,19 +1,18 @@
 angular.module( 'contatooh' ).controller( 'ContatosController', ContatosController );
 
 
-function ContatosController( $scope, $resource ) {
-
+function ContatosController( $scope, $resource, $routeParams ) {
 
   $scope.contatos = [];
   $scope.filtro = '';
+  $scope.contato = {};
 
   var Contato = $resource( '/contatos/:id' );
 
   $scope.init = function init() {
     getContatos();
+    findById();
   }
-
-
 
 
   $scope.init();
@@ -31,6 +30,25 @@ function ContatosController( $scope, $resource ) {
     } );
   }
 
+  $scope.salva = function salva() {
+
+    $scope.contato.$save()
+      .then( function () {
+        //success
+        $scope.mensagem = {
+          texto: 'Contato salvo com sucesso'
+        }
+        $scope.contato = new Contato();
+      } )
+      .catch( function () {
+        //error
+        $scope.mensagem = {
+          texto: 'Nao foi possivel salvar'
+        }
+      } )
+
+  }
+
   function getContatos() {
 
 
@@ -45,6 +63,29 @@ function ContatosController( $scope, $resource ) {
       console.log( 'Nao foi possivel obter a lista de contatos' );
     }
 
+  };
+
+
+  function findById() {
+
+    if ( $routeParams.contatoId ) {
+      Contato.get( {
+        id: $routeParams.contatoId
+      }, _success, _error );
+
+      function _success( contato ) {
+        $scope.contato = contato;
+
+      }
+
+      function _error( error ) {
+        $scope.mensagem = {
+          texto: 'Nao foi possivel obter o contato'
+        };
+      }
+    } else {
+      $scope.contato = new Contato();
+    }
   };
 
 

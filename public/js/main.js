@@ -22,6 +22,11 @@ function _config( $routeProvider ) {
     controller: 'ContatosController'
   } );
 
+  $routeProvider.when( '/contato', {
+    templateUrl: 'partials/contato.html',
+    controller: 'ContatosController'
+  } );
+
   $routeProvider.otherwise( {
     redirectTo: '/contatos'
   } );
